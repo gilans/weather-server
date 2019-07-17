@@ -1,8 +1,8 @@
-Tecnologias a Usar:
+Tecnologias utilizadas:
 
 Node.js, ReactJS, Redux, Redis, ES6, Docker, Traefik
 
-Servicio a utilizar:
+Servicio utilizado:
 
 https://darksky.net/dev
 

@@ -11,12 +11,19 @@ module.exports.getWeatherTemperature = async (req, res) => {
 
   console.log('latlng', lat, lng);
   const { addressCountry } = await getCountryByCoordinates(lat, lng);
-  console.log('country=', addressCountry);
-  const capitalCoordinates = await getCoordinatesByCapital(addressCountry);
-  console.log(capitalCoordinates);
-  const weatherTemperature = await getTemperature(capitalCoordinates);
-  console.log('temperature:', weatherTemperature);
-  const weatherSeason = weatherSeasonByCountry(capitalCoordinates.lat, new Date());
-  console.log('Season:', weatherSeason);
-  res.sendStatus(201);
+  let resp;
+  if (addressCountry !== '') {
+    console.log('country=', addressCountry);
+    const capitalCoordinates = await getCoordinatesByCapital(addressCountry);
+    console.log(capitalCoordinates);
+    const weatherTemperature = await getTemperature(capitalCoordinates);
+    console.log('temperature:', weatherTemperature);
+    const weatherSeason = weatherSeasonByCountry(capitalCoordinates.lat, new Date());
+    console.log('Season:', weatherSeason);
+    resp = { addressCountry, temperature: weatherTemperature }
+  } else {
+    resp = { error: 'country not found' }
+  }
+
+  res.sendStatus(resp);
 };

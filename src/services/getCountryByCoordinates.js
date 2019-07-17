@@ -15,7 +15,8 @@ const findCountryCapital = countryName => new Promise(async (resolve) => {
   const lcCountryName = countryName.toLocaleLowerCase();
   const helperFunc = item => item.name.toLocaleLowerCase().includes(lcCountryName);
 
-  const countryCapital = await countriesCapital.find(helperFunc).capital;
+  const countryResponse = await countriesCapital.find(helperFunc);
+  const countryCapital = countryResponse ? countryResponse.capital : '';
   resolve(countryCapital);
 });
 module.exports.getCountryByCoordinates = (latitude, longitude) => {
@@ -29,16 +30,19 @@ module.exports.getCountryByCoordinates = (latitude, longitude) => {
       .then(async (response) => {
         const countries = response.data;
         if (!countries || !countries.results || !countries.results.length) {
-          return reject(); // TODO: error
+          return reject();
         }
         // handle success
 
         const countryName = await findCountryName(countries);
         console.log('countryName', countryName);
         if (countryName === '') {
-          return reject(); // TODO: error
+          return resolve({ addressCountry: '' });
         }
         const countryCapital = await findCountryCapital(countryName);
+        if (countryCapital === '') {
+          return resolve({ addressCountry: '' });
+        }
         return resolve({ addressCountry: `${countryCapital},${countryName}` });
       })
       .catch((error) => {
