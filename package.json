@@ -4,6 +4,7 @@
   "main": "src/server.js",
   "license": "MIT",
   "scripts": {
+    "start": "node src/server"
     "dev": "nodemon src/server",
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix"
