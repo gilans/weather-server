@@ -1,0 +1,6 @@
+{
+  "prettier.eslintIntegration": true,
+  "editor.formatOnSave": true,
+  "editor.detectIndentation": false,
+  "editor.tabSize": 2
+}
