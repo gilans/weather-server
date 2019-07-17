@@ -1,7 +1,6 @@
 FROM node:latest
 
 # set working directory
-RUN mkdir /app
 WORKDIR /app
 
 ADD package*.json /app/
