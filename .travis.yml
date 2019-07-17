@@ -1,0 +1,23 @@
+language: node_js
+node_js:
+  - "stable"
+services:
+  - docker
+
+before_install:
+  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password=$(heroku auth:token) registry.heroku.com
+script:
+  - docker build --tag suarezgilberto/react-node-docker-server .
+  - docker tag suarezgilberto/react-node-docker-server registry.heroku.com/$HEROKU_APP_NAME/web
+
+deploy:
+  provider: script
+  script:
+    #push to repositories
+    docker push suarezgilberto/react-node-docker-server;
+    docker push registry.heroku.com/$HEROKU_APP_NAME/web;
+    heroku container:release web --app $HEROKU_APP_NAME
+  on:
+    branch: master
