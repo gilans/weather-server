@@ -12,8 +12,9 @@ const findCountryName = countries => new Promise((resolve) => {
 });
 
 const findCountryCapital = countryName => new Promise(async (resolve) => {
-  const helperFunc = item => item.name.toLocaleLowerCase() === countryName.toLocaleLowerCase();
-  // TODO: agregar expresion regular para buscar texto
+  const lcCountryName = countryName.toLocaleLowerCase();
+  const helperFunc = item => item.name.toLocaleLowerCase().includes(lcCountryName);
+
   const countryCapital = await countriesCapital.find(helperFunc).capital;
   resolve(countryCapital);
 });

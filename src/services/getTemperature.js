@@ -10,7 +10,7 @@ module.exports.getTemperature = async ({ lat, lng }) => {
 
   return new Promise((resolve, reject) => {
     if (redisData) {
-      console.log('redis data', redisData)
+      console.log('redis data', redisData);
       resolve(redisData);
     }
     else {
