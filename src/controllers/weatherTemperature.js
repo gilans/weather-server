@@ -20,10 +20,16 @@ module.exports.getWeatherTemperature = async (req, res) => {
     console.log('temperature:', weatherTemperature);
     const weatherSeason = weatherSeasonByCountry(capitalCoordinates.lat, new Date());
     console.log('Season:', weatherSeason);
-    resp = { status: 200, data: { addressCountry, temperature: weatherTemperature } }
+    resp = {
+      status: 201,
+      data: { addressCountry, temperature: weatherTemperature, weatherSeason },
+    };
   } else {
-    resp = { status: 500, data: { error: 'country not found' } }
+    resp = {
+      status: 500,
+      data: { error: 'country not found' },
+    };
   }
 
-  res.sendStatus(resp.status).json(res.data);
+  res.json(resp.data);
 };
