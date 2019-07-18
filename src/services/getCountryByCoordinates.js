@@ -1,24 +1,12 @@
+
 const axios = require('axios');
 const { countriesCapital } = require('./models');
+const { findCountryName, findCountryCapital } = require('./utils/countryByCoordinatesUtils');
 
-const findCountryName = countries => new Promise((resolve) => {
-  const findCountry = item => item.types.includes('country');
-  const dataCountry = countries.results.find(findCountry);
-
-  const countryName = dataCountry
-    ? dataCountry.formatted_address
-    : '';
-  return resolve(countryName);
-});
-
-const findCountryCapital = countryName => new Promise(async (resolve) => {
-  const lcCountryName = countryName.toLocaleLowerCase();
-  const helperFunc = item => item.name.toLocaleLowerCase().includes(lcCountryName);
-
-  const countryResponse = await countriesCapital.find(helperFunc);
-  const countryCapital = countryResponse ? countryResponse.capital : '';
-  resolve(countryCapital);
-});
+/**
+ * retorna nombre de pais y su capital a partir de una
+ * coordenada de cualquier localidad de ese pais
+ */
 module.exports.getCountryByCoordinates = (latitude, longitude) => {
   console.log('Latitude: ', latitude, '  Longitude: ', longitude);
   // const latlng = { lat: parseFloat(latitude), lng: parseFloat(longitude) };
@@ -32,21 +20,19 @@ module.exports.getCountryByCoordinates = (latitude, longitude) => {
         if (!countries || !countries.results || !countries.results.length) {
           return reject();
         }
-        // handle success
 
         const countryName = await findCountryName(countries);
         console.log('countryName', countryName);
         if (countryName === '') {
           return resolve({ addressCountry: '' });
         }
-        const countryCapital = await findCountryCapital(countryName);
+        const countryCapital = await findCountryCapital(countryName, countriesCapital);
         if (countryCapital === '') {
           return resolve({ addressCountry: '' });
         }
         return resolve({ addressCountry: `${countryCapital},${countryName}` });
       })
       .catch((error) => {
-        // handle error
         console.log(error);
       });
   });

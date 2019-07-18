@@ -1,3 +1,6 @@
+/**
+ * metodo que retorna la estacion de un pais dependiendo de su ubicacion Latitud
+ */
 module.exports.weatherSeasonByCountry = (latitudeCountry, dateSeason) => {
   const [NORTHERN, SOUTHERN] = ['NORTHERN', 'SOUTHERN'];
 

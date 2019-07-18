@@ -12,16 +12,14 @@ module.exports.getCoordinatesByCapital = (address) => {
         console.log(JSON.stringify(response.data.results.geometry));
         const countries = response.data;
         if (!countries || !countries.results || !countries.results.length) {
-          return reject(); // TODO: error
+          return reject();
         }
-        // handle success
 
         const dataCountry = countries.results[0].geometry.location;
 
         return resolve(dataCountry);
       })
       .catch((error) => {
-        // handle error
         console.log(error);
       });
   });

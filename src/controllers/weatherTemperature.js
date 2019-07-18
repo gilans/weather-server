@@ -1,3 +1,9 @@
+/**
+ * controlador para buscar las el nombre del pais y capital
+ * luego llama google.maps para obtener lat y lng de capital del pais
+ * Luego consulta a DArkSky sobre la temperatura del lugar
+ * La estacion se obtiene mediante la funcion weatherSeasonByCountry
+ */
 const {
   getCountryByCoordinates,
   getCoordinatesByCapital,
@@ -9,7 +15,6 @@ const {
 module.exports.getWeatherTemperature = async (req, res) => {
   const { lat, lng } = req.query;
 
-  console.log('latlng', lat, lng);
   const { addressCountry } = await getCountryByCoordinates(lat, lng);
   let resp;
   if (addressCountry !== '') {
