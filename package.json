@@ -18,7 +18,7 @@
     "express": "^4.17.1",
     "flashheart": "^3.2.1",
     "morgan": "^1.9.1",
-    "redis": "^2.8.0"
+    "redis": "^3.1.1"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
